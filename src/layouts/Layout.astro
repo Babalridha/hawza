@@ -22,16 +22,70 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     
+    <script is:inline>
+      // Immediately set language and direction from localStorage to prevent layout flashing
+      const savedLang = localStorage.getItem('lang') || 'en';
+      document.documentElement.lang = savedLang;
+      document.documentElement.dir = savedLang === 'fa' ? 'rtl' : 'ltr';
+      if (savedLang === 'fa') {
+        document.documentElement.classList.add('lang-loading');
+      }
+    </script>
+    <style is:inline>
+      html.lang-loading body {
+        visibility: hidden;
+      }
+    </style>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Outfit:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Outfit:wght@100..900&family=Vazirmatn:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden pb-20 md:pb-0">
     <slot />
 
+    <!-- Translation Engine & Visual Reveal -->
     <script>
-      // Smooth reveal on scroll interaction
+      import { translations } from "../data/translations.js";
+
+      function applyLanguage(lang: string) {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+
+        // Translate text nodes with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (key && translations[lang] && translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+          }
+        });
+
+        // Translate alt attributes
+        document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+          const key = el.getAttribute('data-i18n-alt');
+          if (key && translations[lang] && translations[lang][key]) {
+            el.setAttribute('alt', translations[lang][key]);
+          }
+        });
+
+        // Remove the loading mask
+        document.documentElement.classList.remove('lang-loading');
+      }
+
+      // Initialize language state
+      const currentLang = localStorage.getItem('lang') || 'en';
+      applyLanguage(currentLang);
+
+      // Listen for language toggles
+      window.addEventListener('languagechange', () => {
+        const newLang = localStorage.getItem('lang') || 'en';
+        applyLanguage(newLang);
+      });
+    </script>
+
+    <!-- Smooth Reveal on Scroll -->
+    <script>
       const observerOptions = {
         threshold: 0.1
       };

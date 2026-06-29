@@ -10,7 +10,7 @@ import logoImage from "../assets/logo.png";
       <span class="material-symbols-outlined text-primary text-2xl cursor-pointer md:!hidden">menu</span>
       <a href="#home" class="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
         <Image src={logoImage} alt="Babalridha Hawza Logo" class="h-9 w-auto" />
-        <span class="font-headline-md text-[20px] md:text-headline-md text-primary tracking-tight font-bold">Babalridha Hawza</span>
+        <span class="font-headline-md text-[18px] md:text-headline-md text-primary tracking-tight font-bold" data-i18n="nav.title">Babalridha Hawza</span>
       </a>
     </div>
     
@@ -19,10 +19,10 @@ import logoImage from "../assets/logo.png";
       id="desktop-nav"
       class="hidden md:flex items-center gap-8 font-label-md text-label-md text-on-surface-variant"
     >
-      <a class="nav-link text-primary font-bold transition-colors" href="#home">Home</a>
-      <a class="nav-link hover:text-primary transition-colors" href="#academics">Academics</a>
-      <a class="nav-link hover:text-primary transition-colors" href="#apply">Apply</a>
-      <a class="nav-link hover:text-primary transition-colors" href="#portal">Portal</a>
+      <a class="nav-link text-primary font-bold transition-colors" href="#home" data-i18n="nav.home">Home</a>
+      <a class="nav-link hover:text-primary transition-colors" href="#academics" data-i18n="nav.academics">Academics</a>
+      <a class="nav-link hover:text-primary transition-colors" href="#apply" data-i18n="nav.apply">Apply</a>
+      <a class="nav-link hover:text-primary transition-colors" href="#portal" data-i18n="nav.portal">Portal</a>
     </div>
     
     <!-- Premium Segmented Language Switcher -->
@@ -49,20 +49,41 @@ import logoImage from "../assets/logo.png";
   const langEn = document.getElementById('lang-en');
   const langFa = document.getElementById('lang-fa');
 
-  if (langEn && langFa) {
-    langEn.addEventListener('click', () => {
-      langEn.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
-      langEn.classList.remove('hover:text-primary');
-      langFa.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
-      langFa.classList.add('hover:text-primary');
-    });
+  // Helper to update button visual active states
+  function setButtonStates(lang: string) {
+    if (langEn && langFa) {
+      if (lang === 'fa') {
+        langFa.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+        langFa.classList.remove('hover:text-primary');
+        langEn.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+        langEn.classList.add('hover:text-primary');
+      } else {
+        langEn.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+        langEn.classList.remove('hover:text-primary');
+        langFa.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+        langFa.classList.add('hover:text-primary');
+      }
+    }
+  }
 
-    langFa.addEventListener('click', () => {
-      langFa.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
-      langFa.classList.remove('hover:text-primary');
-      langEn.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
-      langEn.classList.add('hover:text-primary');
-    });
+  // Set language function
+  function setLanguage(lang: string) {
+    localStorage.setItem('lang', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+    setButtonStates(lang);
+    
+    // Dispatch a global event so other components can react if needed
+    window.dispatchEvent(new Event('languagechange'));
+  }
+
+  if (langEn && langFa) {
+    // Read current lang
+    const currentLang = localStorage.getItem('lang') || 'en';
+    setButtonStates(currentLang);
+
+    langEn.addEventListener('click', () => setLanguage('en'));
+    langFa.addEventListener('click', () => setLanguage('fa'));
   }
 
   // Scroll Spy for Desktop Navigation

@@ -2,18 +2,20 @@
 ---
 <footer class="bg-surface-container py-16 border-t border-outline/15">
   <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-    <div class="font-headline-sm text-headline-sm text-primary mb-6">Babalridha Hawza</div>
+    
+    <div class="font-headline-sm text-headline-sm text-primary mb-6" data-i18n="footer.title">Babalridha Hawza</div>
     
     <div class="flex flex-wrap justify-center gap-8 mb-8 text-on-surface-variant font-label-md text-label-md">
-      <a class="hover:text-primary transition-colors" href="#">About Hawza</a>
-      <a class="hover:text-primary transition-colors" href="#">Life in Qom</a>
-      <a class="hover:text-primary transition-colors" href="#">Curriculum</a>
-      <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
-      <a class="hover:text-primary transition-colors" href="#">Accreditation</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="footer.link.about">About Hawza</a>
+      <a class="hover:text-primary transition-colors" href="#home" data-i18n="footer.link.life">Life in Qom</a>
+      <a class="hover:text-primary transition-colors" href="#academics" data-i18n="footer.link.curriculum">Curriculum</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="footer.link.privacy">Privacy Policy</a>
+      <a class="hover:text-primary transition-colors" href="#" data-i18n="footer.link.accreditation">Accreditation</a>
     </div>
     
     <p class="text-on-surface-variant/60 font-body-md text-body-md">
-      © {new Date().getFullYear()} Babalridha Hawza Institute. All Rights Reserved.
+      © {new Date().getFullYear()} <span data-i18n="footer.copy">Babalridha Hawza Institute. All Rights Reserved.</span>
     </p>
+
   </div>
 </footer>

@@ -121,3 +121,23 @@
     transform: translateY(-4px);
     box-shadow: 0 10px 25px -5px rgba(0, 53, 39, 0.1);
 }
+
+/* Custom Font Families for Farsi */
+html[lang="fa"] {
+  --font-label-md: "Vazirmatn", sans-serif;
+  --font-headline-sm: "Vazirmatn", sans-serif;
+  --font-display-lg: "Vazirmatn", sans-serif;
+  --font-body-md: "Vazirmatn", sans-serif;
+  --font-headline-md: "Vazirmatn", sans-serif;
+  --font-display-lg-mobile: "Vazirmatn", sans-serif;
+  --font-body-lg: "Vazirmatn", sans-serif;
+}
+
+/* Visibility toggling by language */
+html[lang="fa"] .lang-en {
+  display: none !important;
+}
+
+html:not([lang="fa"]) .lang-fa {
+  display: none !important;
+}
