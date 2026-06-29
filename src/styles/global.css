@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary-fixed-dim: #95d3ba;
+  --color-on-tertiary: #ffffff;
+  --color-surface-container-low: #f5f4ef;
+  --color-primary: #003527;
+  --color-error: #ba1a1a;
+  --color-on-error-container: #93000a;
+  --color-background: #faf9f4;
+  --color-surface-dim: #dbdad5;
+  --color-tertiary-fixed-dim: #b8c4ff;
+  --color-secondary: #745b27;
+  --color-tertiary: #00237e;
+  --color-surface-container-lowest: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-surface-variant: #e3e3de;
+  --color-outline-variant: #bfc9c3;
+  --color-on-background: #1b1c19;
+  --color-tertiary-fixed: #dde1ff;
+  --color-on-primary-fixed-variant: #0b513d;
+  --color-surface-tint: #2b6954;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #785f2b;
+  --color-surface-container-high: #e9e8e3;
+  --color-secondary-fixed-dim: #e3c285;
+  --color-on-primary: #ffffff;
+  --color-on-surface-variant: #404944;
+  --color-on-surface: #1b1c19;
+  --color-inverse-primary: #95d3ba;
+  --color-secondary-fixed: #ffdea4;
+  --color-primary-container: #064e3b;
+  --color-secondary-container: #fedb9c;
+  --color-on-tertiary-fixed-variant: #173bab;
+  --color-on-primary-fixed: #002117;
+  --color-inverse-surface: #30312e;
+  --color-on-tertiary-container: #9badff;
+  --color-on-secondary-fixed: #261900;
+  --color-primary-fixed: #b0f0d6;
+  --color-outline: #707974;
+  --color-surface-container: #efeee9;
+  --color-on-error: #ffffff;
+  --color-on-tertiary-fixed: #001453;
+  --color-surface: #faf9f4;
+  --color-on-secondary-fixed-variant: #5a4312;
+  --color-tertiary-container: #1238a8;
+  --color-surface-bright: #faf9f4;
+  --color-on-primary-container: #80bea6;
+  --color-inverse-on-surface: #f2f1ec;
+  --color-surface-container-highest: #e3e3de;
+
+  /* Border Radius */
+  --radius-default: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+
+  /* Spacing */
+  --spacing-margin-desktop: 48px;
+  --spacing-gutter: 24px;
+  --spacing-container-max: 1200px;
+  --spacing-margin-mobile: 16px;
+  --spacing-unit: 8px;
+
+  /* Font Families */
+  --font-label-md: "Outfit", sans-serif;
+  --font-headline-sm: "Cormorant Garamond", serif;
+  --font-display-lg: "Cormorant Garamond", serif;
+  --font-body-md: "Outfit", sans-serif;
+  --font-headline-md: "Cormorant Garamond", serif;
+  --font-display-lg-mobile: "Cormorant Garamond", serif;
+  --font-body-lg: "Outfit", sans-serif;
+
+  /* Custom Font Sizes (Tailwind v4 mapped properties) */
+  --text-label-md: 14px;
+  --text-label-md-lh: 1.2;
+  --text-label-md-letter-spacing: 0.05em;
+  --text-label-md-font-weight: 600;
+
+  --text-headline-sm: 24px;
+  --text-headline-sm-lh: 1.4;
+  --text-headline-sm-font-weight: 500;
+
+  --text-display-lg: 48px;
+  --text-display-lg-lh: 1.1;
+  --text-display-lg-letter-spacing: -0.02em;
+  --text-display-lg-font-weight: 600;
+
+  --text-body-md: 16px;
+  --text-body-md-lh: 1.6;
+  --text-body-md-font-weight: 400;
+
+  --text-headline-md: 32px;
+  --text-headline-md-lh: 1.3;
+  --text-headline-md-font-weight: 500;
+
+  --text-display-lg-mobile: 36px;
+  --text-display-lg-mobile-lh: 1.2;
+  --text-display-lg-mobile-font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg-lh: 1.6;
+  --text-body-lg-font-weight: 400;
+}
+
+/* Custom Styles */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.text-gold { color: #745b27; }
+.bg-gold { background-color: #745b27; }
+.border-gold { border-color: #745b27; }
+
+.shrine-gradient {
+    background: linear-gradient(to bottom, rgba(0, 53, 39, 0.7), rgba(0, 53, 39, 0.9));
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 53, 39, 0.1);
+}

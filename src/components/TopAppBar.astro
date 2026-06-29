@@ -1,0 +1,97 @@
+---
+import { Image } from "astro:assets";
+import logoImage from "../assets/logo.png";
+---
+<nav class="fixed top-0 w-full z-50 bg-surface border-b border-outline/15 h-16">
+  <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-full max-w-container-max mx-auto">
+    
+    <!-- Logo & Title Section -->
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-primary text-2xl cursor-pointer md:!hidden">menu</span>
+      <a href="#home" class="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
+        <Image src={logoImage} alt="Babalridha Hawza Logo" class="h-9 w-auto" />
+        <span class="font-headline-md text-[20px] md:text-headline-md text-primary tracking-tight font-bold">Babalridha Hawza</span>
+      </a>
+    </div>
+    
+    <!-- Desktop Navigation Links with Scroll Spy support -->
+    <div 
+      id="desktop-nav"
+      class="hidden md:flex items-center gap-8 font-label-md text-label-md text-on-surface-variant"
+    >
+      <a class="nav-link text-primary font-bold transition-colors" href="#home">Home</a>
+      <a class="nav-link hover:text-primary transition-colors" href="#academics">Academics</a>
+      <a class="nav-link hover:text-primary transition-colors" href="#apply">Apply</a>
+      <a class="nav-link hover:text-primary transition-colors" href="#portal">Portal</a>
+    </div>
+    
+    <!-- Premium Segmented Language Switcher -->
+    <div class="flex items-center gap-1 bg-surface-container-high border border-outline-variant/35 rounded-full p-1 font-label-md text-label-md text-on-surface-variant">
+      <button 
+        id="lang-en" 
+        class="px-3 py-1 rounded-full transition-all duration-300 font-bold bg-primary text-white shadow-sm cursor-pointer text-xs"
+      >
+        English
+      </button>
+      <button 
+        id="lang-fa" 
+        class="px-3 py-1 rounded-full transition-all duration-300 hover:text-primary cursor-pointer text-xs"
+      >
+        فارسی
+      </button>
+    </div>
+    
+  </div>
+</nav>
+
+<script>
+  // Language Switcher Logic
+  const langEn = document.getElementById('lang-en');
+  const langFa = document.getElementById('lang-fa');
+
+  if (langEn && langFa) {
+    langEn.addEventListener('click', () => {
+      langEn.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+      langEn.classList.remove('hover:text-primary');
+      langFa.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+      langFa.classList.add('hover:text-primary');
+    });
+
+    langFa.addEventListener('click', () => {
+      langFa.classList.add('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+      langFa.classList.remove('hover:text-primary');
+      langEn.classList.remove('bg-primary', 'text-white', 'font-bold', 'shadow-sm');
+      langEn.classList.add('hover:text-primary');
+    });
+  }
+
+  // Scroll Spy for Desktop Navigation
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('#desktop-nav .nav-link');
+
+  function updateActiveNavLink() {
+    let currentId = 'home';
+    
+    sections.forEach(section => {
+      const sectionTop = (section as HTMLElement).offsetTop;
+      if (window.scrollY >= sectionTop - 120) {
+        currentId = section.getAttribute('id') || 'home';
+      }
+    });
+
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === `#${currentId}`) {
+        link.classList.add('text-primary', 'font-bold');
+        link.classList.remove('hover:text-primary');
+      } else {
+        link.classList.remove('text-primary', 'font-bold');
+        link.classList.add('hover:text-primary');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNavLink);
+  // Run on mount
+  updateActiveNavLink();
+</script>

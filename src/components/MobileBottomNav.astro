@@ -1,0 +1,76 @@
+---
+---
+<!-- Mobile Bottom Nav (Suppressed for desktop) -->
+<div 
+  id="mobile-nav"
+  class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-20 bg-surface border-t border-outline/15 z-50 px-2"
+>
+  <a 
+    href="#home" 
+    class="mobile-nav-link flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1.5 transition-all duration-300"
+  >
+    <span class="material-symbols-outlined">home</span>
+    <span class="text-[10px] font-bold">Home</span>
+  </a>
+  
+  <a 
+    href="#academics" 
+    class="mobile-nav-link flex flex-col items-center justify-center text-on-surface-variant rounded-full px-4 py-1.5 transition-all duration-300"
+  >
+    <span class="material-symbols-outlined">menu_book</span>
+    <span class="text-[10px]">Academics</span>
+  </a>
+  
+  <a 
+    href="#apply" 
+    class="mobile-nav-link flex flex-col items-center justify-center text-on-surface-variant rounded-full px-4 py-1.5 transition-all duration-300"
+  >
+    <span class="material-symbols-outlined">edit_note</span>
+    <span class="text-[10px]">Apply</span>
+  </a>
+  
+  <a 
+    href="#portal" 
+    class="mobile-nav-link flex flex-col items-center justify-center text-on-surface-variant rounded-full px-4 py-1.5 transition-all duration-300"
+  >
+    <span class="material-symbols-outlined">auto_stories</span>
+    <span class="text-[10px]">Portal</span>
+  </a>
+</div>
+
+<script>
+  // Scroll Spy for Mobile Bottom Navigation
+  const sections = document.querySelectorAll('section[id]');
+  const mobileLinks = document.querySelectorAll('#mobile-nav .mobile-nav-link');
+
+  function updateActiveMobileNavLink() {
+    let currentId = 'home';
+    
+    sections.forEach(section => {
+      const sectionTop = (section as HTMLElement).offsetTop;
+      if (window.scrollY >= sectionTop - 150) {
+        currentId = section.getAttribute('id') || 'home';
+      }
+    });
+
+    mobileLinks.forEach(link => {
+      const textSpan = link.querySelector('span:last-child');
+      
+      if (link.getAttribute('href') === `#${currentId}`) {
+        // Set active classes
+        link.classList.add('bg-primary-container', 'text-on-primary-container');
+        link.classList.remove('text-on-surface-variant');
+        if (textSpan) textSpan.classList.add('font-bold');
+      } else {
+        // Set inactive classes
+        link.classList.remove('bg-primary-container', 'text-on-primary-container');
+        link.classList.add('text-on-surface-variant');
+        if (textSpan) textSpan.classList.remove('font-bold');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveMobileNavLink);
+  // Run on mount
+  updateActiveMobileNavLink();
+</script>
