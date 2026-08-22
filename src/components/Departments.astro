@@ -1,0 +1,4 @@
+---
+const { t }=Astro.props; const images=['dept-brisc.webp','dept-olp.webp','dept-rp.webp','dept-ahsan.webp','dept-arbaeen.webp','dept-lectures.webp','dept-parents.webp','dept-kids.webp'];
+---
+<section id="departments" class="section white"><div class="container"><div class="section-head"><h2>{t.departments.title}</h2><p>{t.departments.subtitle}</p></div><div class="cards four departments">{t.departments.items.map(([title,tag,desc],i)=><article class="card"><img src={`/images/${images[i]}`} alt={title} loading="lazy"/><div><span class="dept-number">{String(i+1).padStart(2,'0')}</span><small>{tag}</small><h3>{title}</h3><p>{desc}</p></div></article>)}</div></div></section>

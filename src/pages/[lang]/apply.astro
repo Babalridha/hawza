@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'; import Header from '../../components/Header.astro'; import Footer from '../../components/Footer.astro'; import ApplicationForm from '../../components/ApplicationForm.astro'; import {getTranslation,type Locale} from '../../i18n/translations';
+export function getStaticPaths(){return ['en','fa'].map(lang=>({params:{lang}}))} const locale=(Astro.params.lang??'en') as Locale; const t=getTranslation(locale);
+---
+<BaseLayout locale={locale} title={`${t.apply.formTitle} | ${t.footer.name}`} description={t.apply.intro}><Header t={t} locale={locale}/><main><section class="apply-hero pattern"><div class="container"><span class="eyebrow">{t.footer.name}</span><h1>{t.apply.title}</h1><p>{t.apply.intro}</p></div></section><section class="application-wrap container"><div class="form-card"><h2>{t.apply.formTitle}</h2><ApplicationForm t={t}/></div></section></main><Footer t={t}/></BaseLayout>

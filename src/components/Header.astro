@@ -1,0 +1,14 @@
+---
+const { t, locale } = Astro.props; const other = locale === 'fa' ? 'en' : 'fa';
+---
+<header class="site-header"><div class="container nav-wrap">
+  <a href={`/${locale}/`} class="brand"><img src="/images/logo.webp" alt={t.footer.name} /></a>
+  <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><i data-lucide="menu"></i></button>
+  <nav class="nav-links">
+    <a href="#about">{t.nav.about}</a><a href="#curriculum">{t.nav.curriculum}</a><a href="#family">{t.nav.family}</a><a href="#departments">{t.nav.departments}</a><a href="#faculty">{t.nav.faculty}</a>
+  </nav>
+  <div class="nav-actions"><a class="lang" href={`/${other}/`}>{t.nav.language}</a><a class="link" href="/education">{t.nav.portal}</a><a class="button small" href={`/${locale}/apply`}>{t.nav.apply}</a></div>
+</div></header>
+<script is:inline>
+  document.querySelector('.menu-toggle')?.addEventListener('click',e=>{const b=e.currentTarget;document.querySelector('.nav-links')?.classList.toggle('open');b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')!=='true')});
+</script>

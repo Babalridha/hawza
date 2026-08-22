@@ -1,0 +1,24 @@
+---
+const { t } = Astro.props; const f=t.apply.fields;
+const groups = [
+  [['first_name','text',true],['last_name','text',true],['phone','tel',true],['email','email'],['birth_date','date'],['birth_place','text'],['photo','file']],
+  [['last_degree'],['field_of_study'],['education_city'],['average_grade']],
+  [['quran_memorization'],['religious_studies'],['hawza_entry_year'],['hawza_education'],['favorite_hawza_lessons','textarea'],['intended_stay_duration'],['parents_satisfaction'],['intended_specialization']],
+  [['current_occupation','textarea'],['books_read','textarea'],['favorite_scholars','textarea'],['followed_online_sources','textarea'],['favorite_movies','textarea'],['role_models','textarea'],['interests','textarea'],['cultural_activities','textarea']],
+  [['skills_list','textarea'],['skills_experience','textarea']],
+  [['father_name'],['father_birth_year'],['father_job'],['mother_name'],['mother_birth_year'],['mother_job'],['siblings_count'],['marital_status']],
+  [['social_behavior','textarea'],['info_outlook','textarea'],['decision_making','textarea'],['planning_style','textarea']],
+  [['nationality'],['passport_number'],['student_code'],['eitaa_number'],['address','textarea']]
+];
+---
+<form class="application-form" action="#" method="post" enctype="multipart/form-data">
+  <div class="form-tabs" role="tablist">{t.apply.sections.map((s,i)=><button type="button" class:list={{active:i===0}} data-form-tab={i}>{i+1}. {s}</button>)}</div>
+  {groups.map((fields,i)=><fieldset class:list={['form-panel',{active:i===0}]} data-form-panel={i}><legend>{t.apply.sections[i]}</legend><div class="field-grid">
+    {fields.map(([name,type='text',required])=><label class:list={{wide:type==='textarea'||type==='file'}}><span>{f[name]}{required&&<b> *</b>}</span>{type==='textarea'?<textarea name={name} rows="4" required={required}></textarea>:<input name={name} type={type} required={required} accept={type==='file'?'image/*':undefined}/>}</label>)}
+  </div><div class="form-navigation">{i>0&&<button type="button" class="button secondary form-prev">‹</button>}{i<groups.length-1?<button type="button" class="button form-next">›</button>:<button type="submit" class="button submit">{t.apply.submit}</button>}</div></fieldset>)}
+  <p class="form-success" hidden>{t.apply.success}</p>
+</form>
+<script is:inline>
+  const form=document.querySelector('.application-form'); let current=0; const show=i=>{current=i;form.querySelectorAll('[data-form-tab],[data-form-panel]').forEach(x=>x.classList.toggle('active',Number(x.dataset.formTab??x.dataset.formPanel)===i));form.scrollIntoView({behavior:'smooth',block:'start'})};
+  form.querySelectorAll('[data-form-tab]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.formTab))));form.querySelectorAll('.form-next').forEach(b=>b.addEventListener('click',()=>show(Math.min(current+1,7))));form.querySelectorAll('.form-prev').forEach(b=>b.addEventListener('click',()=>show(Math.max(current-1,0))));form.addEventListener('submit',e=>{e.preventDefault();form.querySelector('.form-success').hidden=false});
+</script>
