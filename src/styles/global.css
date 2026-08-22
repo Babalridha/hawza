@@ -81,3 +81,4 @@ html[data-theme=parchment]{--primary:#c8a96b;--primary-50:#fffdf7;--primary-100:
 
 /* Intentionally present for bot detection but inaccessible to sighted users. */
 .honeypot-field{position:absolute!important;inset-inline-start:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important;pointer-events:none!important}
+.hidden{display:none!important}.form-error{background:color-mix(in srgb,var(--danger) 12%,var(--surface));color:var(--danger);padding:15px;border-radius:10px;text-align:center;font-weight:700}.submit:disabled{opacity:.65;cursor:wait;transform:none}
