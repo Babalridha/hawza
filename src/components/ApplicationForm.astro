@@ -12,6 +12,11 @@ const groups = [
 ];
 ---
 <form class="application-form" action="#" method="post" enctype="multipart/form-data">
+  <div class="honeypot-field" aria-hidden="true">
+    <label for="company_website">Company website</label>
+    <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input name="form_started_at" type="hidden" value="" />
   <div class="form-tabs" role="tablist">{t.apply.sections.map((s,i)=><button type="button" class:list={{active:i===0}} data-form-tab={i}>{i+1}. {s}</button>)}</div>
   {groups.map((fields,i)=><fieldset class:list={['form-panel',{active:i===0}]} data-form-panel={i}><legend>{t.apply.sections[i]}</legend><div class="field-grid">
     {fields.map(([name,type='text',required])=><label class:list={{wide:type==='textarea'||type==='file'}}><span>{f[name]}{required&&<b> *</b>}</span>{type==='textarea'?<textarea name={name} rows="4" required={required}></textarea>:<input name={name} type={type} required={required} accept={type==='file'?'image/*':undefined}/>}</label>)}
@@ -19,6 +24,6 @@ const groups = [
   <p class="form-success" hidden>{t.apply.success}</p>
 </form>
 <script is:inline>
-  const form=document.querySelector('.application-form'); let current=0; const show=i=>{current=i;form.querySelectorAll('[data-form-tab],[data-form-panel]').forEach(x=>x.classList.toggle('active',Number(x.dataset.formTab??x.dataset.formPanel)===i))};
+  const form=document.querySelector('.application-form'); form.querySelector('[name="form_started_at"]').value=new Date().toISOString(); let current=0; const show=i=>{current=i;form.querySelectorAll('[data-form-tab],[data-form-panel]').forEach(x=>x.classList.toggle('active',Number(x.dataset.formTab??x.dataset.formPanel)===i))};
   form.querySelectorAll('[data-form-tab]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.formTab))));form.querySelectorAll('.form-next').forEach(b=>b.addEventListener('click',()=>show(Math.min(current+1,7))));form.querySelectorAll('.form-prev').forEach(b=>b.addEventListener('click',()=>show(Math.max(current-1,0))));form.addEventListener('submit',e=>{e.preventDefault();form.querySelector('.form-success').hidden=false});
 </script>
