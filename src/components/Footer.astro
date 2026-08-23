@@ -1,4 +1,13 @@
 ---
-const { t }=Astro.props;
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t } = Astro.props;
 ---
-<footer class="footer pattern"><div class="container"><img src="/images/logo.webp" alt={t.footer.name}/><div><strong>{t.footer.name}</strong><p>{t.footer.desc}</p></div><small>© {new Date().getFullYear()} · {t.footer.rights}</small></div></footer>
+
+<footer class="footer pattern">
+  <div class="container">
+    <Image src={getImageAsset('logo.webp')} alt={t.footer.name} /><div>
+      <strong>{t.footer.name}</strong><p>{t.footer.desc}</p>
+    </div><small>© {new Date().getFullYear()} · {t.footer.rights}</small>
+  </div>
+</footer>

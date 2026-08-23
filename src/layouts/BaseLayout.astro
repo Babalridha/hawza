@@ -1,16 +1,40 @@
 ---
 import '../styles/global.css';
 import type { Locale } from '../i18n/translations';
-interface Props { locale: Locale; title: string; description: string; }
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+}
 const { locale, title, description } = Astro.props;
 ---
+
 <!doctype html>
 <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'} data-theme="cream">
   <head>
-    <meta charset="utf-8" /><meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} /><meta name="generator" content={Astro.generator} />
+    <meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <meta name="description" content={description} /><meta
+      name="generator"
+      content={Astro.generator}
+    />
     <link rel="icon" href="/favicon.ico" /><title>{title}</title>
-    <script is:inline>try{document.documentElement.dataset.theme=localStorage.getItem('site-theme')||'cream'}catch{}</script>
+    <script is:inline>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem('site-theme') || 'cream';
+      } catch {}
+    </script>
   </head>
-  <body><slot /><script src="https://unpkg.com/lucide@latest"></script><script is:inline>document.addEventListener('DOMContentLoaded',()=>window.lucide?.createIcons())</script></body>
+  <body
+    ><slot /><script src="https://unpkg.com/lucide@latest"></script><script
+      is:inline
+    >
+      document.addEventListener('DOMContentLoaded', () =>
+        window.lucide?.createIcons(),
+      );
+    </script></body
+  >
 </html>

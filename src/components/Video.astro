@@ -1,4 +1,16 @@
 ---
-const { t }=Astro.props;
+const { t } = Astro.props;
 ---
-<section id="video-tour" class="section pattern video"><div class="container"><div class="section-head light"><h2>{t.video.title}</h2><p>{t.video.desc}</p></div><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/ndSxGP6isU0" title={t.video.title} allowfullscreen></iframe></div></div></section>
+
+<section id="video-tour" class="section pattern video">
+  <div class="container">
+    <div class="section-head light">
+      <h2>{t.video.title}</h2><p>{t.video.desc}</p>
+    </div><div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/ndSxGP6isU0"
+        title={t.video.title}
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>

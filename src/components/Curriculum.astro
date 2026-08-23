@@ -1,7 +1,86 @@
 ---
-const { t }=Astro.props; const images=['curriculum-academic.webp','curriculum-spiritual.webp','curriculum-recreation.webp','curriculum-skills.webp'];
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t } = Astro.props;
+const images = [
+  'curriculum-academic.webp',
+  'curriculum-spiritual.webp',
+  'curriculum-recreation.webp',
+  'curriculum-skills.webp',
+];
 ---
-<section id="curriculum" class="section soft"><div class="container"><div class="section-head"><h2>{t.curriculum.title}</h2><p>{t.curriculum.subtitle}</p></div>
-<div class="tabs" data-tabs><div class="tab-list" role="tablist">{t.curriculum.tabs.map((item,i)=><button class:list={['tab-button',{active:i===0}]} data-tab={i}><i data-lucide={item[4]}></i>{item[0]}</button>)}</div>
-{t.curriculum.tabs.map((item,i)=><article class:list={['tab-panel',{active:i===0}]} data-panel={i}><div class="tab-copy"><span class="icon large"><i data-lucide={item[4]}></i></span><div><h3>{item[1]}</h3><p>{item[2]}</p><ul>{item[3].map(p=><li><i data-lucide="check"></i>{p}</li>)}</ul></div></div><img src={`/images/${images[i]}`} alt={item[1]} loading="lazy"/></article>)}</div></div></section>
-<script is:inline>document.querySelectorAll('[data-tabs]').forEach(root=>root.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-tab],[data-panel]').forEach(x=>x.classList.remove('active'));btn.classList.add('active');root.querySelector(`[data-panel="${btn.dataset.tab}"]`)?.classList.add('active')})))</script>
+
+<section id="curriculum" class="section soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>{t.curriculum.title}</h2><p>{t.curriculum.subtitle}</p>
+    </div>
+    <div class="tabs" data-tabs>
+      <div class="tab-list" role="tablist">
+        {
+          t.curriculum.tabs.map((item, i) => (
+            <button
+              class:list={['tab-button', { active: i === 0 }]}
+              data-tab={i}
+            >
+              <i data-lucide={item[4]} />
+              {item[0]}
+            </button>
+          ))
+        }
+      </div>
+      {
+        t.curriculum.tabs.map((item, i) => (
+          <article
+            class:list={['tab-panel', { active: i === 0 }]}
+            data-panel={i}
+          >
+            <>
+              <div class="tab-copy">
+                <>
+                  <span class="icon large">
+                    <i data-lucide={item[4]} />
+                  </span>
+                  <div>
+                    <>
+                      <h3>{item[1]}</h3>
+                      <p>{item[2]}</p>
+                      <ul>
+                        {item[3].map((p) => (
+                          <li>
+                            <i data-lucide="check" />
+                            {p}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  </div>
+                </>
+              </div>
+              <Image
+                src={getImageAsset(images[i])}
+                alt={item[1]}
+                loading="lazy"
+              />
+            </>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+<script is:inline>
+  document.querySelectorAll('[data-tabs]').forEach((root) =>
+    root.querySelectorAll('[data-tab]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        root
+          .querySelectorAll('[data-tab],[data-panel]')
+          .forEach((x) => x.classList.remove('active'));
+        btn.classList.add('active');
+        root
+          .querySelector(`[data-panel="${btn.dataset.tab}"]`)
+          ?.classList.add('active');
+      }),
+    ),
+  );
+</script>

@@ -1,7 +1,31 @@
 ---
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
 const { t, locale } = Astro.props;
 ---
-<section class="hero pattern"><div class="container hero-grid"><div>
-  <span class="eyebrow">{t.hero.eyebrow}</span><h1>{t.hero.title} <em>{t.hero.highlight}</em></h1><p>{t.hero.desc}</p>
-  <div class="actions"><a class="button" href={`/${locale}/apply`}>{t.nav.apply}</a><a class="button secondary" href="#video-tour"><i data-lucide="play-circle"></i>{t.hero.video}</a></div>
-</div><div class="hero-art"><div class="hero-image"><img src="/images/hero-main.webp" alt={t.hero.imageTitle}/><div><span>{t.hero.imageTag}</span><strong>{t.hero.imageTitle}</strong></div></div></div></div></section>
+
+<section class="hero pattern">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">{t.hero.eyebrow}</span><h1>
+        {t.hero.title}
+        <em>{t.hero.highlight}</em>
+      </h1><p>{t.hero.desc}</p>
+      <div class="actions">
+        <a class="button" href={`/${locale}/apply`}>{t.nav.apply}</a><a
+          class="button secondary"
+          href="#video-tour"><i data-lucide="play-circle"></i>{t.hero.video}</a
+        >
+      </div>
+    </div><div class="hero-art">
+      <div class="hero-image">
+        <Image
+          src={getImageAsset('hero-main.webp')}
+          alt={t.hero.imageTitle}
+        /><div>
+          <span>{t.hero.imageTag}</span><strong>{t.hero.imageTitle}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

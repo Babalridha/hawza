@@ -1,8 +1,82 @@
 ---
-const { t }=Astro.props;
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t } = Astro.props;
 ---
-<section id="outcomes" class="section soft"><div class="container"><div class="section-head"><h2>{t.outcomes.title}</h2><p>{t.outcomes.subtitle}</p></div><div class="outcomes-layout" data-outcomes-tabs>
-<div class="outcomes-nav">{t.outcomes.items.map(([title,desc],i)=><button type="button" class:list={['outcome-button',{active:i===0}]} data-outcome-button={i}><h4>{title}</h4><p>{desc}</p></button>)}</div>
-<div class="outcomes-showcase">{t.outcomes.items.map(([title,desc],i)=><article class:list={['outcome-panel',{active:i===0}]} data-outcome-panel={i}><span class="outcome-badge">{title}</span><h3>{title}</h3><p>{desc}</p><div class="outcome-gallery"><img src={`/images/outcome-${i+1}-1.webp`} alt={title} loading="lazy"/><img src={`/images/outcome-${i+1}-2.webp`} alt="" loading="lazy"/></div></article>)}</div>
-</div></div></section>
-<script is:inline>document.querySelectorAll('[data-outcomes-tabs]').forEach(root=>root.querySelectorAll('[data-outcome-button]').forEach(button=>button.addEventListener('click',()=>{const i=button.dataset.outcomeButton;root.querySelectorAll('[data-outcome-button]').forEach(x=>x.classList.toggle('active',x===button));const box=root.querySelector('.outcomes-showcase');box.classList.add('switching');setTimeout(()=>{root.querySelectorAll('[data-outcome-panel]').forEach(x=>x.classList.toggle('active',x.dataset.outcomePanel===i));box.classList.remove('switching')},180)})))</script>
+
+<section id="outcomes" class="section soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>{t.outcomes.title}</h2><p>{t.outcomes.subtitle}</p>
+    </div><div class="outcomes-layout" data-outcomes-tabs>
+      <div class="outcomes-nav">
+        {
+          t.outcomes.items.map(([title, desc], i) => (
+            <button
+              type="button"
+              class:list={['outcome-button', { active: i === 0 }]}
+              data-outcome-button={i}
+            >
+              <>
+                <h4>{title}</h4>
+                <p>{desc}</p>
+              </>
+            </button>
+          ))
+        }
+      </div>
+      <div class="outcomes-showcase">
+        {
+          t.outcomes.items.map(([title, desc], i) => (
+            <article
+              class:list={['outcome-panel', { active: i === 0 }]}
+              data-outcome-panel={i}
+            >
+              <>
+                <span class="outcome-badge">{title}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+                <div class="outcome-gallery">
+                  <>
+                    <Image
+                      src={getImageAsset(`outcome-${i + 1}-1.webp`)}
+                      alt={title}
+                      loading="lazy"
+                    />
+                    <Image
+                      src={getImageAsset(`outcome-${i + 1}-2.webp`)}
+                      alt=""
+                      loading="lazy"
+                    />
+                  </>
+                </div>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+<script is:inline>
+  document.querySelectorAll('[data-outcomes-tabs]').forEach((root) =>
+    root.querySelectorAll('[data-outcome-button]').forEach((button) =>
+      button.addEventListener('click', () => {
+        const i = button.dataset.outcomeButton;
+        root
+          .querySelectorAll('[data-outcome-button]')
+          .forEach((x) => x.classList.toggle('active', x === button));
+        const box = root.querySelector('.outcomes-showcase');
+        box.classList.add('switching');
+        setTimeout(() => {
+          root
+            .querySelectorAll('[data-outcome-panel]')
+            .forEach((x) =>
+              x.classList.toggle('active', x.dataset.outcomePanel === i),
+            );
+          box.classList.remove('switching');
+        }, 180);
+      }),
+    ),
+  );
+</script>

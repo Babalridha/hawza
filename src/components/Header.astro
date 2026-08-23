@@ -1,16 +1,156 @@
 ---
-const { t, locale } = Astro.props; const pagePath = Astro.url.pathname.endsWith('/apply') || Astro.url.pathname.endsWith('/apply/') ? 'apply' : '';
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t, locale } = Astro.props;
+const pagePath =
+  Astro.url.pathname.endsWith('/apply') ||
+  Astro.url.pathname.endsWith('/apply/')
+    ? 'apply'
+    : '';
 ---
-<header class="site-header"><div class="container nav-wrap">
-  <a href={`/${locale}/`} class="brand"><img src="/images/logo.webp" alt={t.footer.name} /></a>
-  <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><i data-lucide="menu"></i></button>
-  <nav class="nav-links">
-    <a href="#about">{t.nav.about}</a><a href="#curriculum">{t.nav.curriculum}</a><a href="#family">{t.nav.family}</a><a href="#departments">{t.nav.departments}</a><a href="#faculty">{t.nav.faculty}</a>
-  </nav>
-  <div class="nav-actions"><div class="theme-picker"><button class="theme-toggle" type="button" aria-expanded="false" aria-label="Theme"><span class="theme-swatch"></span><span class="theme-label">Cream</span><i data-lucide="chevron-down"></i></button><div class="theme-menu" hidden><button type="button" data-theme-choice="nord"><span class="swatch nord"></span><span>Nord</span><i data-lucide="check"></i></button><button type="button" data-theme-choice="cream"><span class="swatch cream"></span><span>Cream</span><i data-lucide="check"></i></button><button type="button" data-theme-choice="forest"><span class="swatch forest"></span><span>Forest</span><i data-lucide="check"></i></button><button type="button" data-theme-choice="lapis"><span class="swatch lapis"></span><span>Lapis</span><i data-lucide="check"></i></button><button type="button" data-theme-choice="turquoise"><span class="swatch turquoise"></span><span>Turquoise</span><i data-lucide="check"></i></button><button type="button" data-theme-choice="burgundy"><span class="swatch burgundy"></span><span>Burgundy</span><i data-lucide="check"></i></button><button type="button" data-theme-choice="parchment"><span class="swatch parchment"></span><span>Parchment</span><i data-lucide="check"></i></button></div></div><div class="language-picker"><button class="lang" type="button" aria-expanded="false"><i data-lucide="globe"></i><span>{locale === 'fa' ? 'فارسی' : 'English'}</span><i data-lucide="chevron-down"></i></button><div class="language-menu" hidden><a class:list={{active:locale==='en'}} href={`/en/${pagePath}`}><span>English</span>{locale==='en'&&<i data-lucide="check"></i>}</a><a class:list={{active:locale==='fa'}} href={`/fa/${pagePath}`}><span>فارسی</span>{locale==='fa'&&<i data-lucide="check"></i>}</a></div></div><a class="link" href="https://management.babalridha.com">{t.nav.portal}</a><a class="button small" href={`/${locale}/apply`}>{t.nav.apply}</a></div>
-</div></header>
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a href={`/${locale}/`} class="brand"
+      ><Image src={getImageAsset('logo.webp')} alt={t.footer.name} /></a
+    >
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false"
+      ><i data-lucide="menu"></i></button
+    >
+    <nav class="nav-links">
+      <a href="#about">{t.nav.about}</a><a href="#curriculum"
+        >{t.nav.curriculum}</a
+      ><a href="#family">{t.nav.family}</a><a href="#departments"
+        >{t.nav.departments}</a
+      ><a href="#faculty">{t.nav.faculty}</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="theme-picker">
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-label="Theme"
+          ><span class="theme-swatch"></span><span class="theme-label"
+            >Cream</span
+          ><i data-lucide="chevron-down"></i></button
+        ><div class="theme-menu" hidden>
+          <button type="button" data-theme-choice="nord"
+            ><span class="swatch nord"></span><span>Nord</span><i
+              data-lucide="check"></i></button
+          ><button type="button" data-theme-choice="cream"
+            ><span class="swatch cream"></span><span>Cream</span><i
+              data-lucide="check"></i></button
+          ><button type="button" data-theme-choice="forest"
+            ><span class="swatch forest"></span><span>Forest</span><i
+              data-lucide="check"></i></button
+          ><button type="button" data-theme-choice="lapis"
+            ><span class="swatch lapis"></span><span>Lapis</span><i
+              data-lucide="check"></i></button
+          ><button type="button" data-theme-choice="turquoise"
+            ><span class="swatch turquoise"></span><span>Turquoise</span><i
+              data-lucide="check"></i></button
+          ><button type="button" data-theme-choice="burgundy"
+            ><span class="swatch burgundy"></span><span>Burgundy</span><i
+              data-lucide="check"></i></button
+          ><button type="button" data-theme-choice="parchment"
+            ><span class="swatch parchment"></span><span>Parchment</span><i
+              data-lucide="check"></i></button
+          >
+        </div>
+      </div><div class="language-picker">
+        <button class="lang" type="button" aria-expanded="false"
+          ><i data-lucide="globe"></i><span
+            >{locale === 'fa' ? 'فارسی' : 'English'}</span
+          ><i data-lucide="chevron-down"></i></button
+        ><div class="language-menu" hidden>
+          <a class:list={{ active: locale === 'en' }} href={`/en/${pagePath}`}
+            ><span>English</span>{
+              locale === 'en' && <i data-lucide="check" />
+            }</a
+          ><a class:list={{ active: locale === 'fa' }} href={`/fa/${pagePath}`}
+            ><span>فارسی</span>{locale === 'fa' && <i data-lucide="check" />}</a
+          >
+        </div>
+      </div><a class="link" href="https://management.babalridha.com"
+        >{t.nav.portal}</a
+      ><a class="button small" href={`/${locale}/apply`}>{t.nav.apply}</a>
+    </div>
+  </div>
+</header>
 <script is:inline>
-  document.querySelector('.menu-toggle')?.addEventListener('click',e=>{const b=e.currentTarget;document.querySelector('.nav-links')?.classList.toggle('open');b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')!=='true')});
-  document.querySelectorAll('.language-picker').forEach(picker=>{const button=picker.querySelector('.lang');const menu=picker.querySelector('.language-menu');button.addEventListener('click',e=>{e.stopPropagation();const open=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!open));menu.hidden=open});document.addEventListener('click',e=>{if(!picker.contains(e.target)){button.setAttribute('aria-expanded','false');menu.hidden=true}});button.addEventListener('keydown',e=>{if(e.key==='Escape'){button.setAttribute('aria-expanded','false');menu.hidden=true;button.focus()}})});
-  document.querySelectorAll('.theme-picker').forEach(picker=>{const toggle=picker.querySelector('.theme-toggle');const menu=picker.querySelector('.theme-menu');const label=picker.querySelector('.theme-label');const names={nord:'Nord',cream:'Cream',forest:'Forest',lapis:'Lapis',turquoise:'Turquoise',burgundy:'Burgundy',parchment:'Parchment'};const apply=theme=>{document.documentElement.dataset.theme=theme;label.textContent=names[theme];picker.querySelectorAll('[data-theme-choice]').forEach(x=>x.classList.toggle('active',x.dataset.themeChoice===theme));try{localStorage.setItem('site-theme',theme)}catch{}};apply(document.documentElement.dataset.theme||'cream');toggle.addEventListener('click',e=>{e.stopPropagation();const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));menu.hidden=open});picker.querySelectorAll('[data-theme-choice]').forEach(option=>option.addEventListener('click',()=>{apply(option.dataset.themeChoice);toggle.setAttribute('aria-expanded','false');menu.hidden=true}));document.addEventListener('click',e=>{if(!picker.contains(e.target)){toggle.setAttribute('aria-expanded','false');menu.hidden=true}})});
+  document.querySelector('.menu-toggle')?.addEventListener('click', (e) => {
+    const b = e.currentTarget;
+    document.querySelector('.nav-links')?.classList.toggle('open');
+    b.setAttribute('aria-expanded', b.getAttribute('aria-expanded') !== 'true');
+  });
+  document.querySelectorAll('.language-picker').forEach((picker) => {
+    const button = picker.querySelector('.lang');
+    const menu = picker.querySelector('.language-menu');
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!open));
+      menu.hidden = open;
+    });
+    document.addEventListener('click', (e) => {
+      if (!picker.contains(e.target)) {
+        button.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+      }
+    });
+    button.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        button.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        button.focus();
+      }
+    });
+  });
+  document.querySelectorAll('.theme-picker').forEach((picker) => {
+    const toggle = picker.querySelector('.theme-toggle');
+    const menu = picker.querySelector('.theme-menu');
+    const label = picker.querySelector('.theme-label');
+    const names = {
+      nord: 'Nord',
+      cream: 'Cream',
+      forest: 'Forest',
+      lapis: 'Lapis',
+      turquoise: 'Turquoise',
+      burgundy: 'Burgundy',
+      parchment: 'Parchment',
+    };
+    const apply = (theme) => {
+      document.documentElement.dataset.theme = theme;
+      label.textContent = names[theme];
+      picker
+        .querySelectorAll('[data-theme-choice]')
+        .forEach((x) =>
+          x.classList.toggle('active', x.dataset.themeChoice === theme),
+        );
+      try {
+        localStorage.setItem('site-theme', theme);
+      } catch {}
+    };
+    apply(document.documentElement.dataset.theme || 'cream');
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      menu.hidden = open;
+    });
+    picker.querySelectorAll('[data-theme-choice]').forEach((option) =>
+      option.addEventListener('click', () => {
+        apply(option.dataset.themeChoice);
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+      }),
+    );
+    document.addEventListener('click', (e) => {
+      if (!picker.contains(e.target)) {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+      }
+    });
+  });
 </script>

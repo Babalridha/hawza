@@ -1,4 +1,27 @@
 ---
-const { t }=Astro.props;
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t } = Astro.props;
 ---
-<section id="faculty" class="section soft"><div class="container"><div class="section-head"><h2>{t.faculty.title}</h2><p>{t.faculty.subtitle}</p></div><div class="cards four faculty">{t.faculty.members.map(([name,role,img])=><article class="person"><img src={`/images/${img}`} alt={name} loading="lazy"/><h3>{name}</h3><p>{role}</p></article>)}</div></div></section>
+
+<section id="faculty" class="section soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>{t.faculty.title}</h2><p>{t.faculty.subtitle}</p>
+    </div><div class="cards four faculty">
+      {
+        t.faculty.members.map(([name, role, img]) => (
+          <article class="person">
+            <div class="person-photo">
+              <Image src={getImageAsset(img)} alt={name} loading="lazy" />
+            </div>
+            <div class="person-details">
+              <h3>{name}</h3>
+              <p>{role}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

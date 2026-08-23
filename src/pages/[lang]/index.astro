@@ -1,5 +1,33 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import Header from '../../components/Header.astro'; import Hero from '../../components/Hero.astro'; import About from '../../components/About.astro'; import Curriculum from '../../components/Curriculum.astro'; import Family from '../../components/Family.astro'; import Outcomes from '../../components/Outcomes.astro'; import Departments from '../../components/Departments.astro'; import Video from '../../components/Video.astro'; import Faculty from '../../components/Faculty.astro'; import Cta from '../../components/Cta.astro'; import Footer from '../../components/Footer.astro'; import { getTranslation, type Locale } from '../../i18n/translations';
-export function getStaticPaths(){return ['en','fa'].map(lang=>({params:{lang}}))} const locale=(Astro.params.lang??'en') as Locale; const t=getTranslation(locale);
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import Curriculum from '../../components/Curriculum.astro';
+import Family from '../../components/Family.astro';
+import Outcomes from '../../components/Outcomes.astro';
+import Departments from '../../components/Departments.astro';
+import Video from '../../components/Video.astro';
+import Faculty from '../../components/Faculty.astro';
+import Cta from '../../components/Cta.astro';
+import Footer from '../../components/Footer.astro';
+import { getTranslation, type Locale } from '../../i18n/translations';
+export function getStaticPaths() {
+  return ['en', 'fa'].map((lang) => ({ params: { lang } }));
+}
+const locale = (Astro.params.lang ?? 'en') as Locale;
+const t = getTranslation(locale);
 ---
-<BaseLayout locale={locale} title={t.meta.title} description={t.meta.description}><Header t={t} locale={locale}/><main><Hero t={t} locale={locale}/><About t={t}/><Curriculum t={t}/><Family t={t}/><Outcomes t={t}/><Departments t={t}/><Video t={t}/><Faculty t={t}/><Cta t={t} locale={locale}/></main><Footer t={t}/></BaseLayout>
+
+<BaseLayout
+  locale={locale}
+  title={t.meta.title}
+  description={t.meta.description}
+  ><Header t={t} locale={locale} /><main>
+    <Hero t={t} locale={locale} /><About t={t} /><Curriculum t={t} /><Family
+      t={t}
+    /><Outcomes t={t} /><Departments t={t} /><Video t={t} /><Faculty
+      t={t}
+    /><Cta t={t} locale={locale} />
+  </main><Footer t={t} /></BaseLayout
+>

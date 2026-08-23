@@ -1,29 +1,260 @@
 ---
-const { t } = Astro.props; const f=t.apply.fields;
-const directFields = new Set(['first_name','last_name','phone','email','birth_date','birth_place','photo']);
-const groups = [
-  [['first_name','text',true],['last_name','text',true],['phone','tel',true],['email','email'],['birth_date','date'],['birth_place','text'],['photo','file']],
-  [['last_degree'],['field_of_study'],['education_city'],['average_grade']],
-  [['quran_memorization'],['religious_studies'],['hawza_entry_year'],['hawza_education'],['favorite_hawza_lessons','textarea'],['intended_stay_duration'],['parents_satisfaction'],['intended_specialization']],
-  [['current_occupation','textarea'],['books_read','textarea'],['favorite_scholars','textarea'],['followed_online_sources','textarea'],['favorite_movies','textarea'],['role_models','textarea'],['interests','textarea'],['cultural_activities','textarea']],
-  [['skills_list','textarea'],['skills_experience','textarea']],
-  [['father_name'],['father_birth_year'],['father_job'],['mother_name'],['mother_birth_year'],['mother_job'],['siblings_count'],['marital_status']],
-  [['social_behavior','textarea'],['info_outlook','textarea'],['decision_making','textarea'],['planning_style','textarea']],
-  [['nationality'],['passport_number'],['student_code'],['eitaa_number'],['address','textarea']]
+const { t } = Astro.props;
+const fields = t.apply.fields;
+
+type FieldDefinition = [
+  name: keyof typeof fields,
+  type?: 'text' | 'tel' | 'email' | 'date' | 'file' | 'textarea',
+  required?: boolean,
+];
+
+const directFields = new Set([
+  'first_name',
+  'last_name',
+  'phone',
+  'email',
+  'birth_date',
+  'birth_place',
+  'photo',
+]);
+
+const groups: FieldDefinition[][] = [
+  [
+    ['first_name', 'text', true],
+    ['last_name', 'text', true],
+    ['phone', 'tel', true],
+    ['email', 'email'],
+    ['birth_date', 'date'],
+    ['birth_place'],
+    ['photo', 'file'],
+  ],
+  [['last_degree'], ['field_of_study'], ['education_city'], ['average_grade']],
+  [
+    ['quran_memorization'],
+    ['religious_studies'],
+    ['hawza_entry_year'],
+    ['hawza_education'],
+    ['favorite_hawza_lessons', 'textarea'],
+    ['intended_stay_duration'],
+    ['parents_satisfaction'],
+    ['intended_specialization'],
+  ],
+  [
+    ['current_occupation', 'textarea'],
+    ['books_read', 'textarea'],
+    ['favorite_scholars', 'textarea'],
+    ['followed_online_sources', 'textarea'],
+    ['favorite_movies', 'textarea'],
+    ['role_models', 'textarea'],
+    ['interests', 'textarea'],
+    ['cultural_activities', 'textarea'],
+  ],
+  [
+    ['skills_list', 'textarea'],
+    ['skills_experience', 'textarea'],
+  ],
+  [
+    ['father_name'],
+    ['father_birth_year'],
+    ['father_job'],
+    ['mother_name'],
+    ['mother_birth_year'],
+    ['mother_job'],
+    ['siblings_count'],
+    ['marital_status'],
+  ],
+  [
+    ['social_behavior', 'textarea'],
+    ['info_outlook', 'textarea'],
+    ['decision_making', 'textarea'],
+    ['planning_style', 'textarea'],
+  ],
+  [
+    ['nationality'],
+    ['passport_number'],
+    ['student_code'],
+    ['eitaa_number'],
+    ['address', 'textarea'],
+  ],
 ];
 ---
-<form class="application-form" action="https://management.babalridha.com/api/public/student-applications" method="post" enctype="multipart/form-data" data-error-message={t.apply.error} data-submitting-message={t.apply.submitting}>
-  <input type="text" name="company_website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+
+<form
+  class="application-form"
+  action="https://management.babalridha.com/api/public/student-applications"
+  method="post"
+  enctype="multipart/form-data"
+  data-error-message={t.apply.error}
+  data-submitting-message={t.apply.submitting}
+>
+  <input
+    type="text"
+    name="company_website"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    class="hidden"
+  />
   <input type="hidden" name="form_started_at" />
-  <div class="form-tabs" role="tablist">{t.apply.sections.map((s,i)=><button type="button" class:list={{active:i===0}} data-form-tab={i}>{i+1}. {s}</button>)}</div>
-  {groups.map((fields,i)=><fieldset class:list={['form-panel',{active:i===0}]} data-form-panel={i}><legend>{t.apply.sections[i]}</legend><div class="field-grid">
-    {fields.map(([name,type='text',required])=>{const fieldName=directFields.has(name)?name:`data[${name}]`;return <label class:list={{wide:type==='textarea'||type==='file'}}><span>{f[name]}{required&&<b> *</b>}</span>{type==='textarea'?<textarea name={fieldName} rows="4" required={required}></textarea>:<input name={fieldName} type={type} required={required} accept={type==='file'?'image/*':undefined}/>}</label>})}
-  </div><div class="form-navigation">{i>0&&<button type="button" class="button secondary form-prev">‹</button>}{i<groups.length-1?<button type="button" class="button form-next">›</button>:<button type="submit" class="button submit">{t.apply.submit}</button>}</div></fieldset>)}
+
+  <div class="form-tabs" role="tablist">
+    {
+      t.apply.sections.map((section, index) => (
+        <button
+          type="button"
+          class:list={{ active: index === 0 }}
+          data-form-tab={index}
+        >
+          {index + 1}. {section}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    groups.map((group, groupIndex) => (
+      <fieldset
+        class:list={['form-panel', { active: groupIndex === 0 }]}
+        data-form-panel={groupIndex}
+      >
+        <legend>{t.apply.sections[groupIndex]}</legend>
+
+        <div class="field-grid">
+          {group.map(([name, type = 'text', required]) => {
+            const fieldName = directFields.has(name) ? name : `data[${name}]`;
+
+            return (
+              <label
+                class:list={{ wide: type === 'textarea' || type === 'file' }}
+              >
+                <span>
+                  {fields[name]}
+                  {required && <b> *</b>}
+                </span>
+                {type === 'textarea' ? (
+                  <textarea name={fieldName} rows="4" required={required} />
+                ) : (
+                  <input
+                    name={fieldName}
+                    type={type}
+                    required={required}
+                    accept={type === 'file' ? 'image/*' : undefined}
+                  />
+                )}
+              </label>
+            );
+          })}
+        </div>
+
+        <div class="form-navigation">
+          {groupIndex > 0 && (
+            <button type="button" class="button secondary form-prev">
+              ‹
+            </button>
+          )}
+          {groupIndex < groups.length - 1 ? (
+            <button type="button" class="button form-next">
+              ›
+            </button>
+          ) : (
+            <button type="submit" class="button submit">
+              {t.apply.submit}
+            </button>
+          )}
+        </div>
+      </fieldset>
+    ))
+  }
+
   <p class="form-success" hidden>{t.apply.success}</p>
   <p class="form-error" role="alert" hidden></p>
 </form>
+
 <script is:inline>
-  const form=document.querySelector('.application-form'); const startedAt=form.querySelector('[name="form_started_at"]'); const setStartedAt=()=>{startedAt.value=String(Math.floor(Date.now()/1000))}; setStartedAt(); let current=0; const show=i=>{current=i;form.querySelectorAll('[data-form-tab],[data-form-panel]').forEach(x=>x.classList.toggle('active',Number(x.dataset.formTab??x.dataset.formPanel)===i))};
-  form.querySelectorAll('[data-form-tab]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.formTab))));form.querySelectorAll('.form-next').forEach(b=>b.addEventListener('click',()=>show(Math.min(current+1,7))));form.querySelectorAll('.form-prev').forEach(b=>b.addEventListener('click',()=>show(Math.max(current-1,0))));
-  form.addEventListener('submit',async e=>{e.preventDefault();const submit=form.querySelector('.submit');const success=form.querySelector('.form-success');const error=form.querySelector('.form-error');const original=submit.textContent;success.hidden=true;error.hidden=true;submit.disabled=true;submit.textContent=form.dataset.submittingMessage;try{const response=await fetch(form.action,{method:'POST',headers:{Accept:'application/json'},body:new FormData(form)});let payload={};try{payload=await response.json()}catch{}if(!response.ok)throw new Error(payload.message||Object.values(payload.errors||{}).flat().join(' ')||form.dataset.errorMessage);success.textContent=payload.message||success.textContent;success.hidden=false;form.reset();setStartedAt();show(0)}catch(reason){error.textContent=reason instanceof Error?reason.message:form.dataset.errorMessage;error.hidden=false}finally{submit.disabled=false;submit.textContent=original}});
+  const form = document.querySelector('.application-form');
+  const startedAt = form.querySelector('[name="form_started_at"]');
+
+  const setStartedAt = () => {
+    startedAt.value = String(Math.floor(Date.now() / 1000));
+  };
+
+  let current = 0;
+
+  const showPanel = (index) => {
+    current = index;
+    form
+      .querySelectorAll('[data-form-tab], [data-form-panel]')
+      .forEach((element) => {
+        const elementIndex = Number(
+          element.dataset.formTab ?? element.dataset.formPanel,
+        );
+        element.classList.toggle('active', elementIndex === index);
+      });
+  };
+
+  setStartedAt();
+
+  form.querySelectorAll('[data-form-tab]').forEach((button) => {
+    button.addEventListener('click', () =>
+      showPanel(Number(button.dataset.formTab)),
+    );
+  });
+  form.querySelectorAll('.form-next').forEach((button) => {
+    button.addEventListener('click', () => showPanel(Math.min(current + 1, 7)));
+  });
+  form.querySelectorAll('.form-prev').forEach((button) => {
+    button.addEventListener('click', () => showPanel(Math.max(current - 1, 0)));
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const submitButton = form.querySelector('.submit');
+    const successMessage = form.querySelector('.form-success');
+    const errorMessage = form.querySelector('.form-error');
+    const originalButtonText = submitButton.textContent;
+
+    successMessage.hidden = true;
+    errorMessage.hidden = true;
+    submitButton.disabled = true;
+    submitButton.textContent = form.dataset.submittingMessage;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+
+      let payload = {};
+      try {
+        payload = await response.json();
+      } catch {
+        // The fallback message handles a non-JSON response.
+      }
+
+      if (!response.ok) {
+        const validationErrors = Object.values(payload.errors ?? {})
+          .flat()
+          .join(' ');
+        throw new Error(
+          payload.message || validationErrors || form.dataset.errorMessage,
+        );
+      }
+
+      successMessage.textContent =
+        payload.message || successMessage.textContent;
+      successMessage.hidden = false;
+      form.reset();
+      setStartedAt();
+      showPanel(0);
+    } catch (error) {
+      errorMessage.textContent =
+        error instanceof Error ? error.message : form.dataset.errorMessage;
+      errorMessage.hidden = false;
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
+  });
 </script>

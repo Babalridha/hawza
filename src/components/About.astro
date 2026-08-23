@@ -1,6 +1,39 @@
 ---
-const { t }=Astro.props;
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t } = Astro.props;
 ---
-<section id="about" class="section white"><div class="container"><div class="section-head"><h2>{t.about.title}</h2><p>{t.about.subtitle}</p></div>
-<div class="cards three">{t.about.cards.map(([title,desc,icon])=><article class="card"><span class="icon"><i data-lucide={icon}></i></span><h3>{title}</h3><p>{desc}</p></article>)}</div>
-<div class="feature pattern"><div><span class="eyebrow">15</span><h3>{t.about.bannerTitle}</h3><p>{t.about.bannerDesc}</p></div><img src="/images/evolution.webp" alt={t.about.bannerTitle} loading="lazy"/></div></div></section>
+
+<section id="about" class="section white">
+  <div class="container">
+    <div class="section-head">
+      <h2>{t.about.title}</h2><p>{t.about.subtitle}</p>
+    </div>
+    <div class="cards three">
+      {
+        t.about.cards.map(([title, desc, icon]) => (
+          <article class="card">
+            <>
+              <span class="icon">
+                <i data-lucide={icon} />
+              </span>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </>
+          </article>
+        ))
+      }
+    </div>
+    <div class="feature pattern">
+      <div>
+        <span class="eyebrow">15</span><h3>{t.about.bannerTitle}</h3><p>
+          {t.about.bannerDesc}
+        </p>
+      </div><Image
+        src={getImageAsset('evolution.webp')}
+        alt={t.about.bannerTitle}
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

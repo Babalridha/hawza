@@ -1,8 +1,94 @@
 ---
-const { t }=Astro.props; const icons=['book-heart','building-2','palmtree','heart-pulse'];
+import { Image } from 'astro:assets';
+import { getImageAsset } from '../lib/images';
+const { t } = Astro.props;
+const icons = ['book-heart', 'building-2', 'palmtree', 'heart-pulse'];
 ---
-<section id="family" class="section white"><div class="container"><div class="section-head"><h2>{t.family.title}</h2><p>{t.family.subtitle}</p></div><div class="family-tabs" data-family-tabs>
-<div class="family-buttons">{t.family.cards.map(([title,desc],i)=><button type="button" class:list={['family-button',{active:i===0}]} data-family-button={i}><span class="icon"><i data-lucide={icons[i]}></i></span><h3>{title}</h3><p>{desc}</p></button>)}</div>
-<div class="family-showcase pattern">{t.family.cards.map(([title,desc],i)=><article class:list={['family-panel',{active:i===0}]} data-family-panel={i}><div class="family-detail"><span class="eyebrow"><i data-lucide="info"></i>{title}</span><h3>{title}</h3><p>{desc}</p><ul><li><i data-lucide="check"></i>{t.family.subtitle}</li><li><i data-lucide="check"></i>{desc}</li></ul></div><div class="family-photo"><img src={`/images/family-tab-${i}.webp`} alt={title} loading="lazy"/></div></article>)}</div>
-</div></div></section>
-<script is:inline>document.querySelectorAll('[data-family-tabs]').forEach(root=>root.querySelectorAll('[data-family-button]').forEach(button=>button.addEventListener('click',()=>{const i=button.dataset.familyButton;root.querySelectorAll('[data-family-button]').forEach(x=>x.classList.toggle('active',x===button));root.querySelectorAll('[data-family-panel]').forEach(x=>x.classList.toggle('active',x.dataset.familyPanel===i));window.lucide?.createIcons()})))</script>
+
+<section id="family" class="section white">
+  <div class="container">
+    <div class="section-head">
+      <h2>{t.family.title}</h2><p>{t.family.subtitle}</p>
+    </div><div class="family-tabs" data-family-tabs>
+      <div class="family-buttons">
+        {
+          t.family.cards.map(([title, desc], i) => (
+            <button
+              type="button"
+              class:list={['family-button', { active: i === 0 }]}
+              data-family-button={i}
+            >
+              <>
+                <span class="icon">
+                  <i data-lucide={icons[i]} />
+                </span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </>
+            </button>
+          ))
+        }
+      </div>
+      <div class="family-showcase pattern">
+        {
+          t.family.cards.map(([title, desc], i) => (
+            <article
+              class:list={['family-panel', { active: i === 0 }]}
+              data-family-panel={i}
+            >
+              <>
+                <div class="family-detail">
+                  <>
+                    <span class="eyebrow">
+                      <i data-lucide="info" />
+                      {title}
+                    </span>
+                    <h3>{title}</h3>
+                    <p>{desc}</p>
+                    <ul>
+                      <>
+                        <li>
+                          <i data-lucide="check" />
+                          {t.family.subtitle}
+                        </li>
+                        <li>
+                          <i data-lucide="check" />
+                          {desc}
+                        </li>
+                      </>
+                    </ul>
+                  </>
+                </div>
+                <div class="family-photo">
+                  <Image
+                    src={getImageAsset(`family-tab-${i}.webp`)}
+                    alt={title}
+                    loading="lazy"
+                  />
+                </div>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+<script is:inline>
+  document.querySelectorAll('[data-family-tabs]').forEach((root) =>
+    root.querySelectorAll('[data-family-button]').forEach((button) =>
+      button.addEventListener('click', () => {
+        const i = button.dataset.familyButton;
+        root
+          .querySelectorAll('[data-family-button]')
+          .forEach((x) => x.classList.toggle('active', x === button));
+        root
+          .querySelectorAll('[data-family-panel]')
+          .forEach((x) =>
+            x.classList.toggle('active', x.dataset.familyPanel === i),
+          );
+        window.lucide?.createIcons();
+      }),
+    ),
+  );
+</script>
