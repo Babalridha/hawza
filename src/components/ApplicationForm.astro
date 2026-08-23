@@ -12,7 +12,7 @@ const groups = [
   [['nationality'],['passport_number'],['student_code'],['eitaa_number'],['address','textarea']]
 ];
 ---
-<form class="application-form" action="https://management.test/api/public/student-applications" method="post" enctype="multipart/form-data" data-error-message={t.apply.error} data-submitting-message={t.apply.submitting}>
+<form class="application-form" action="https://management.babalridha.com/api/public/student-applications" method="post" enctype="multipart/form-data" data-error-message={t.apply.error} data-submitting-message={t.apply.submitting}>
   <input type="text" name="company_website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
   <input type="hidden" name="form_started_at" />
   <div class="form-tabs" role="tablist">{t.apply.sections.map((s,i)=><button type="button" class:list={{active:i===0}} data-form-tab={i}>{i+1}. {s}</button>)}</div>
