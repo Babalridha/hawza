@@ -720,7 +720,7 @@ textarea {
 .field-grid b {
   color: var(--danger);
 }
-.field-grid input,
+.field-grid input:not(.filepond--browser),
 .field-grid textarea {
   width: 100%;
   background: var(--primary-50);
@@ -730,7 +730,7 @@ textarea {
   outline: none;
   transition: 0.2s;
 }
-.field-grid input:focus,
+.field-grid input:not(.filepond--browser):focus,
 .field-grid textarea:focus {
   border-color: var(--f4);
   box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
@@ -1316,7 +1316,7 @@ html[dir='rtl'] .outcomes-showcase.switching {
 }
 
 /* Nord-themed native file upload. */
-.field-grid input[type='file'] {
+.field-grid input[type='file']:not(.filepond--browser) {
   min-height: 116px;
   padding: 16px;
   background: linear-gradient(135deg, var(--primary-50), var(--n6));
@@ -1326,15 +1326,15 @@ html[dir='rtl'] .outcomes-showcase.switching {
   display: flex;
   align-items: center;
 }
-.field-grid input[type='file']:hover {
+.field-grid input[type='file']:not(.filepond--browser):hover {
   border-color: var(--f3);
   background: var(--n6);
 }
-.field-grid input[type='file']:focus {
+.field-grid input[type='file']:not(.filepond--browser):focus {
   border-color: var(--f4);
   box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.14);
 }
-.field-grid input[type='file']::file-selector-button {
+.field-grid input[type='file']:not(.filepond--browser)::file-selector-button {
   border: 0;
   border-radius: 10px;
   background: var(--n0);
@@ -1347,7 +1347,7 @@ html[dir='rtl'] .outcomes-showcase.switching {
     background 0.2s,
     transform 0.2s;
 }
-.field-grid input[type='file']::file-selector-button:hover {
+.field-grid input[type='file']:not(.filepond--browser)::file-selector-button:hover {
   background: var(--f4);
   transform: translateY(-1px);
 }
