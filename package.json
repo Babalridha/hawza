@@ -15,7 +15,9 @@
     "deploy:pages": "npm run build && wrangler pages deploy dist --project-name hawza --branch main"
   },
   "dependencies": {
-    "astro": "^7.2.4"
+    "astro": "^7.2.4",
+    "filepond": "^4.32.12",
+    "filepond-plugin-image-preview": "^4.6.12"
   },
   "devDependencies": {
     "prettier": "^3.9.6",

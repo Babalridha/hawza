@@ -170,7 +170,14 @@ const groups: FieldDefinition[][] = [
   <p class="form-error" role="alert" hidden></p>
 </form>
 
-<script is:inline>
+<script>
+  import * as FilePond from 'filepond';
+  import 'filepond/dist/filepond.min.css';
+  import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+  import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+  FilePond.registerPlugin(FilePondPluginImagePreview);
+
   const form = document.querySelector('.application-form');
   const startedAt = form.querySelector('[name="form_started_at"]');
 
@@ -206,6 +213,13 @@ const groups: FieldDefinition[][] = [
     button.addEventListener('click', () => showPanel(Math.max(current - 1, 0)));
   });
 
+  // Initialize FilePond
+  const fileInput = form.querySelector('input[type="file"]');
+  const pond = FilePond.create(fileInput, {
+    credits: false,
+    storeAsFile: false, // We will manually handle the file in FormData
+  });
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -220,10 +234,18 @@ const groups: FieldDefinition[][] = [
     submitButton.textContent = form.dataset.submittingMessage;
 
     try {
+      const formData = new FormData(form);
+
+      // Append the FilePond file manually
+      const files = pond.getFiles();
+      if (files.length > 0) {
+        formData.set('photo', files[0].file);
+      }
+
       const response = await fetch(form.action, {
         method: 'POST',
         headers: { Accept: 'application/json' },
-        body: new FormData(form),
+        body: formData,
       });
 
       let payload = {};
@@ -246,6 +268,7 @@ const groups: FieldDefinition[][] = [
         payload.message || successMessage.textContent;
       successMessage.hidden = false;
       form.reset();
+      pond.removeFiles(); // Clear FilePond
       setStartedAt();
       showPanel(0);
     } catch (error) {
