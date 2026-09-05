@@ -705,14 +705,16 @@ textarea {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-.field-grid label {
+.field-grid label,
+.field-grid .field {
   display: flex;
   flex-direction: column;
   gap: 7px;
   color: var(--n2);
   font-weight: 700;
 }
-.field-grid label.wide {
+.field-grid label.wide,
+.field-grid .field.wide {
   grid-column: 1/-1;
 }
 .field-grid b {

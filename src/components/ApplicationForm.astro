@@ -123,23 +123,33 @@ const groups: FieldDefinition[][] = [
           {group.map(([name, type = 'text', required]) => {
             const fieldName = directFields.has(name) ? name : `data[${name}]`;
 
+            if (type === 'file') {
+              return (
+                <div class="field wide">
+                  <span class="label-text">
+                    {fields[name]}
+                    {required && <b> *</b>}
+                  </span>
+                  <input
+                    name={fieldName}
+                    type={type}
+                    required={required}
+                    accept="image/*"
+                  />
+                </div>
+              );
+            }
+
             return (
-              <label
-                class:list={{ wide: type === 'textarea' || type === 'file' }}
-              >
-                <span>
+              <label class:list={{ wide: type === 'textarea' }}>
+                <span class="label-text">
                   {fields[name]}
                   {required && <b> *</b>}
                 </span>
                 {type === 'textarea' ? (
                   <textarea name={fieldName} rows="4" required={required} />
                 ) : (
-                  <input
-                    name={fieldName}
-                    type={type}
-                    required={required}
-                    accept={type === 'file' ? 'image/*' : undefined}
-                  />
+                  <input name={fieldName} type={type} required={required} />
                 )}
               </label>
             );
@@ -236,10 +246,14 @@ const groups: FieldDefinition[][] = [
     try {
       const formData = new FormData(form);
 
-      // Append the FilePond file manually
+      // Remove the original empty photo field if FilePond replaced it
+      formData.delete('photo');
+
+      // Append the FilePond file manually exactly as a normal file upload
       const files = pond.getFiles();
       if (files.length > 0) {
-        formData.set('photo', files[0].file);
+        const file = files[0].file;
+        formData.append('photo', file, file.name);
       }
 
       const response = await fetch(form.action, {
